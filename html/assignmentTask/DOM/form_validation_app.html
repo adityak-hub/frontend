@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .valid {
+            border: 2px solid green;
+        }
+
+        .invalid {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="myForm">
+    <label>Name:</label><br>
+    <input type="text" id="name"><br>
+    <small id="nameError" class="error"></small><br><br>
+
+    <label>Email:</label><br>
+    <input type="text" id="email"><br>
+    <small id="emailError" class="error"></small><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" id="password"><br>
+    <small id="passError" class="error"></small><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script src="task4.js"></script>
+</body>
+</html>
