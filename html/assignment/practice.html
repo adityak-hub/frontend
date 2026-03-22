@@ -1,0 +1,218 @@
+/*
+========================================
+🧠 15-Minute Core JavaScript Practice
+========================================
+
+TASK: Mini "Student Score Analyzer"
+
+Rules:
+- Use plain JavaScript only
+- No libraries
+- Use console.log for testing
+- Focus on fundamentals, not shortcuts
+
+----------------------------------------
+INPUT DATA
+----------------------------------------
+
+const scores = ["85", 92, "67", 40, 100, "30", 76, "90"];
+
+(Note: scores are intentionally mixed types)
+
+----------------------------------------
+YOUR TASKS (FOLLOW IN ORDER)
+----------------------------------------
+
+1️⃣ Create a function named:
+   analyzeScores(scoresArray)
+
+----------------------------------------
+
+2️⃣ Inside the function:
+
+- Loop through the scoresArray
+- Convert each value to a number
+- Ignore values that become NaN after conversion
+
+(Hint: use Number() and isNaN())
+
+----------------------------------------
+
+3️⃣ Categorize each valid score:
+
+Use if / else conditions:
+
+- score >= 90  → "Excellent"
+- score >= 60  → "Pass"
+- score < 60   → "Fail"
+
+⚠️ You MUST use:
+- if / else
+- ternary operator (at least once)
+
+----------------------------------------
+
+4️⃣ Maintain counters:
+
+- excellentCount
+- passCount
+- failCount
+
+----------------------------------------
+
+5️⃣ Calculate:
+
+- Total number of valid students
+- Average score
+- Round average to 2 decimal places
+
+----------------------------------------
+
+6️⃣ Return an object from the function:
+
+{
+  totalStudents: number,
+  excellent: number,
+  pass: number,
+  fail: number,
+  averageScore: number
+}
+
+----------------------------------------
+EXPECTED USAGE
+----------------------------------------
+
+const result = analyzeScores(scores);
+console.log(result);
+
+
+
+
+
+
+<!--  
+const scores = ["85", 92, "67", 40, 100, "30", 76, "90"];
+
+function analyzeScores(scoresArray) {
+  let excellentCount = 0;
+  let passCount = 0;
+  let failCount = 0;
+  let totalScore = 0;
+  let totalStudents = 0;
+
+  for (let i = 0; i < scoresArray.length; i++) {
+    const score = Number(scoresArray[i]);
+
+    // ignore NaN values
+    if (isNaN(score)) {
+      continue;
+    }
+
+    totalStudents++;
+    totalScore += score;
+
+    // categorization
+    if (score >= 90) {
+      excellentCount++;
+    } else if (score >= 60) {
+      passCount++;
+    } else {
+      failCount++;
+    }
+  }
+
+  // ternary used here
+  const averageScore =
+    totalStudents > 0
+      ? Number((totalScore / totalStudents).toFixed(2))
+      : 0;
+
+  return {
+    totalStudents: totalStudents,
+    excellent: excellentCount,
+    pass: passCount,
+    fail: failCount,
+    averageScore: averageScore
+  };
+}
+
+const result = analyzeScores(scores);
+console.log(result);
+
+-->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+   <link href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="new.css">
+</head>
+<body>
+
+   <form>
+     
+   </form>
+    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+const scores = ["85", 92, "67", 40, 100, "30", 76, "90"];
+
+function analyzeScores(scoresArray) {
+  let excellentCount = 0;
+  let passCount = 0;
+  let failCount = 0;
+  let totalScore = 0;
+  let totalStudents = 0;
+
+  for (let i = 0; i < scoresArray.length; i++) {
+    const score = Number(scoresArray[i]);
+
+    // ignore NaN values
+    if (isNaN(score)) {
+      continue;
+    }
+
+    totalStudents++;
+    totalScore += score;
+
+    // categorization
+    if (score >= 90) {
+      excellentCount++;
+    } else if (score >= 60) {
+      passCount++;
+    } else {
+      failCount++;
+    }
+  }
+
+  // ternary used here
+  const averageScore =
+    totalStudents > 0
+      ? Number((totalScore / totalStudents).toFixed(2))
+      : 0;
+
+  return {
+    totalStudents: totalStudents,
+    excellent: excellentCount,
+    pass: passCount,
+    fail: failCount,
+    averageScore: averageScore
+  };
+}
+
+const result = analyzeScores(scores);
+console.log(result);
