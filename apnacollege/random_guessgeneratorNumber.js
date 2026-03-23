@@ -9,9 +9,11 @@ while(true){
         console.log("user quite");
         break;
     }else if(guess==random){
-        console.log("you are right congrats!");
+        console.log("you are right congrats!random number was " + random);
         break;
-    }else {
-        guess=prompt("your guess was wrong. Please try again");
+    }else if (guess<random){
+        guess = prompt("you number is too small");
+    }else{
+        guess = prompt("your number is too large");
     }
 }
