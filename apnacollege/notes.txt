@@ -1,0 +1,635 @@
+--HOISTING
+.only declaration is hoisted;
+/value is not hoisted.
+
+
+1. var ki hoisting 
+console.log(a); // undefined
+var a = 10;
+
+
+---behind the scene
+var a;          // hoisted
+console.log(a); // undefined
+a = 10;
+--
+
+
+.var hoist hota hai
+.Automatically undefined assign ho jata hai
+.Isliye error nahi aata
+
+2. let ki hoisting
+console.log(b); // ❌ ReferenceError
+let b = 20;
+
+--------
+👉 Behind the scenes:
+
+.b hoist hota hai
+.BUT initialize nahi hota
+
+✔️ Isliye error aata hai
+-------
+
+
+3.const ki hoisting
+
+console.log(c); // ❌ ReferenceError
+const c = 30;
+
+
+----------
+👉 Same as let
+
+.hoist hota hai
+.initialize nahi hota
+
+-----------------
+
+
+
+
+
+1.Reference error=when we access variable without initialize and declare(“variable exist hi nahi karti”)
+
+-----------
+2.TDZ = The time between variable hoisting and initialization(“variable exist karti hai but use nahi kar sakte abhi”)
+TDZ is the time when a variable is declared but cannot be accessed before initialization, resulting in a ReferenceError.
+
+{
+  console.log(x); // ❌ TDZ
+  let x = 5;
+}
+
+👉 Timeline samajh:
+
+1.Scope start hua {
+2.x memory me aa gaya (hoisted)
+3.But value assign nahi hui
+4.Is duration ko bolte hain 👉 TDZ
+5.let x = 5 → TDZ khatam
+
+
+
+
+
+
+
+Scope: scope determines the accessibility of variables,objects,functions from different parts of the code,
+1.function scope.
+2.Block scope.
+3.lexical scope.
+4.global scope.
+
+
+1. function scope=variables defined inside a function are not accessible(visible) fro outside the fuunction.
+
+
+ex:1---
+
+let sum = 54; // gobal scope.   
+
+function calsum(a,b){
+    let sum= a+b; //function Scope
+    console.log(sum)  --3
+}
+
+calsum(1,2);
+console.log(sum);  --54
+
+jab global scope and function scope aapas mai priority ke liye fight karte hai toh function ke andar priority ke liye function scope jitega and global ki priority ke liye global scope jitega.
+
+
+
+2.  Block Scope = Variables declare inside a {} block cannot be accessed from outside the block,
+
+* var pe kabhi block scope apply nhi jota. sirf let and const pe hota hai, isliye var use karna bad idea hota hai.
+
+ex--
+{
+    var a = 25; 
+}
+
+console.log(a);  // print ho jaayega 
+
+
+{
+    let a = 25; 
+}
+
+console.log(a); // it will show an error;
+
+
+for(let i=1; i<=5; i++){
+    console.log(i); //block scope;
+}
+
+
+
+3.Lexical Scope=a varible defined outside a function can be accessible inside another function defined after the variable declaration.
+
+// we use it in nested function concept.
+
+ex----
+
+function outerFunc(){
+    let x = 5;
+    let y= 6;
+    function innerFunc(){   
+        console.log(x);
+    }
+    innerFunc();
+}
+
+
+outerFunc();
+
+
+
+
+..The opposite is NOT true.
+
+ex----
+
+function outerFunc(){
+    let x = 5;
+    let y= 6;
+    function innerFunc(){   
+        let a = 10;
+        console.log(x);
+        console.log(y);
+    }
+    console.log(a); // this opposite not true.
+    innerFunc();
+}
+
+
+outerFunc();
+
+
+ex---
+function outerFunc(){
+    let x = 5;
+    let y= 6;
+    function innerFunc(){    // function scope
+        let a = 10;
+        console.log(x);
+        console.log(y);
+    }
+}
+    
+innerFunc();   // it will shown an error bcz innerFunc function scope ke under hai
+
+
+
+
+
+
+******* FUNCTION
+
+function printName(){
+    console.log("aditya);
+}
+
+printName();
+
+
+
+
+
+
+*****FUNCTION EXPRESSION OR NAMELESS FUNCTION
+
+let sum = function(a,b){
+    return a+b;
+}
+console.log(sum(5,5));
+
+
+
+******HIGH ORDER FUNCTION
+A function that does one or both:
+
+. takes one or multiple functions as arguments
+. return a function
+
+
+
+ex.-- for  takes one or multiple functions as arguments
+
+
+function multigreet(func,n){
+    for(let i=1; i<=n; i++){
+        func();
+    }
+}
+
+let greet = function(){
+    console.log("hello");
+
+}
+
+multigreet(greet,10);    // hum direct function bhi likh ke pass kr skte hai as arguement like-- multigreet(function() {console.log("namstey)},10);
+
+
+
+--ex for return a function.
+
+
+function oddorevenfactory(request){
+    if(request=="odd"){
+        let odd = function(n){
+            console.log(!(n%2==0));
+            
+        }
+        return odd;
+    }else if(request=="even"){
+        let even = function(n){
+            console.log((n%2==0));
+        }
+        return even;
+    }else{
+        console.log("wrong request");
+    }
+    
+}
+
+
+let request = "even"
+let func = oddorevenfactory("odd");   //ye ek function return krega usse func mai store kr rhe hai taaki usmai value daal kr call kr ske.
+func(4);
+
+
+
+
+
+
+*******METHODS
+--Actions that can be performed on an objects.
+
+const calculator={
+    add: function(a,b){
+        return a+b;
+    },
+    sub: function(a,b){
+        return a-b;
+    },
+    mul: function(a,b){
+        return a*b;
+    }
+}
+
+
+console.log(calculator.add(1,3));
+
+
+
+***METHOD SHORTHAND
+
+const calculator={
+    add(a,b){
+        return a+b;
+    },
+    sub(a,b){
+        return a-b;
+    },
+    mul(a,b){
+        return a*b;
+    }
+}
+console.log(calculator.add(1,3));
+
+
+*******this keyword
+"this" keyword refers to an object that is executing the current piece of code.
+
+ex--
+
+const student ={
+    name : "aditya",
+    age : 23,
+    eng :98,
+    math :90,
+    phy:99,
+    getavg(){
+        let  avg = (this.eng+this.math+this.phy)/3 ;
+        console.log(`${this.name} got avg marks = ${avg}`);
+    }
+}
+
+student.getavg();
+
+
+*** try & catch
+The try statement allows you to define a block of code to be tested for errors while it is being executed.
+
+the catch statement allows you to define a block of code to be executed, if an error occurs inthe try block.
+
+
+
+console.log("hello world");
+console.log("hello world");
+console.log("hello world");
+console.log("hello world");
+// let a =5;
+try{
+    console.log(a);
+}catch(err){
+    console.log("caught an error.. a is not defined");
+    console.log(err);
+}
+console.log("hello world2");
+console.log("hello world2");
+console.log("hello world2");
+console.log("hello world2");
+
+
+
+*****arrow functions
+
+
+const sum  = (a,b) =>{
+    console.log(a+b);
+}
+
+sum(2,5);
+
+const cube = n=>{
+    return(n*n*n);
+
+}
+
+let result =console.log(cube(3));
+
+
+*** implicit(automatic) return of arrow function
+
+const cube = n=>(
+    n*n*n    
+
+); // parenthesis lgao ya na lago.
+
+let result =console.log(cube(3));
+
+
+
+*****Set Timeout 
+Set Timeout is a inbuilt function off window object.
+
+ex1--
+console.log("hiii Students");
+
+setTimeout(()=>{
+    console.log("Gla University");
+},3000);
+
+console.log("welcome to");
+
+
+
+
+ex2--
+
+console.log("hlo world");
+
+const func = ()=>{
+    console.log("here")
+};
+
+
+
+setTimeout(func, 2000);
+
+console.log("aligarh")
+
+
+
+******setInterval
+
+after interval this piece of code continues will run.
+it will not stop until we do not use clearInterval(id);
+
+ex.1--- for unstop
+console.log("My name is");
+setInterval(()=>{
+    console.log("from apna college");
+},2000);
+console.log("aditya kumar");
+
+
+
+ex2. --- for stop
+
+
+console.log("My name is");
+let id1=setInterval(()=>{
+    console.log("from apna college");
+},2000);
+console.log("aditya kumar");
+
+
+clearInterval(id1);
+
+
+
+******this with arrow functions and normal function
+
+normal function = function mai this calling object pe depend krta hai, konsi objects se  function ko call kiya gya hai.
+arrow function =  arrow function normal function ki trah nhi dekhte ki hme kisne call kiya hai woh dekhte hai ki hmare parents ko kis object ne  call kiya hai. arrow function ke liye scope whi hoga jo parent ke liye hoga.  jo parent function ko call krta hai whi arrow function inherit kr leta hai.
+lexical scope ka matlab parent ka kya scope hai.
+
+
+const student ={
+    name :"aman",
+    marks :95,
+    prop : this,   //global scope
+    getname :function(){
+        console.log(this);
+        return this.name;
+    },
+    getmarks:() =>{
+        console.log(this);  // parent's scope
+        return this.marks;
+    },
+    getinfo1: function(){
+        setTimeout(() => {
+            console.log(this);  //student
+            
+        },2000);
+    },
+    getinfo2:function(){
+        setTimeout(function()  {
+            console.log(this);  //window
+        }, 2000);
+    }
+}
+
+
+***callback
+A callback is a function passed as argument to be executed later.(ek function jo kisi dusre function ke argument ke form mai diya jaata hai aur baad mai call hota hai to usse callback function khte hai)
+ex---
+function hello(callback) {
+    console.log("Hello");
+    callback();
+}
+
+function bye() {
+    console.log("Bye");
+}
+
+hello(bye);
+
+Step-by-step:
+hello(bye) call hua
+console.log("Hello") run hua
+👉 Output: Hello
+callback() run hua
+👉 ye actually bye() hai
+bye() execute hua
+👉 Output: Bye
+
+output--
+Hello
+Bye
+
+
+ex---
+function processStudent(name, callback) {
+    console.log("Processing student:", name);
+    callback(name);
+}
+
+function showResult(name) {
+    console.log(name + " has passed");
+}
+
+processStudent("Aditya", showResult);
+
+
+
+
+
+
+
+*****some array METHODS
+arr.forEach(some function definition or name);
+
+
+1. forEach:- arr.forEach(some function definition or name);
+
+ex-- 
+
+let arr = [1,2,3,4,5];
+
+let print = function(el){   
+    console.log(el);
+}
+
+arr.forEach(print);   // we pass function name
+
+
+ex--   
+
+let arr = [1,2,3,4,5];
+
+
+arr.forEach(function(el){
+    console.log(el);     // pass function definition in normal function
+});
+
+
+ex--   
+
+let arr = [1,2,3,4,5];
+
+
+arr.forEach((el)=>{
+    console.log(el);     // pass function definition in arrow function
+});
+
+
+
+
+2.map
+ let newArr = arr.map(some function definition or name);
+* newArr has the same size as old arr.
+
+ex---
+let num = [1,2,3,4];
+
+let double = num.map((el)=>{
+    return el*2;
+});
+
+
+console.log(double);
+
+
+3.filter:
+let newArr = arr.filter(some function definition or name);
+*jab callback function output mai true deta hai tab hum el ko newArr mai add kr dete hai agr false toh nhi add krte
+
+let nums = [1,2,3,4,7,8,2,9,10,12,11];
+
+let ans = nums.filter((el)=>{
+    return el%2==0;  //even
+})
+
+console.log(ans);
+
+4.Every:
+
+Returns true if every element of array gives true for some function.Else returns false.
+
+arr.every(some function definition or name);
+
+a.
+console.log([2,4,6].every((el) => el%2==0)
+);
+-- true
+
+
+b.
+console.log([2,4,6,5].every((el) => el%2==0)
+);
+
+--false
+
+
+5.Some:
+
+Returns true if some element of array gives true for some function.Else returns false.
+
+arr.some(some function definition or name);
+
+a.
+console.log([1,2,3,4].some((el) => el%2==0)
+);
+-- true
+
+
+b.
+console.log([1,3].some((el) => el%2==0)
+);
+
+--false
+
+6.reduce
+Reduces the array to a single value
+
+arr.reduce(reducer function with 2 variables for(accumulator, element));
+
+a.
+console.log([1,2,3,4,5].reduce((res,el)=>(res+el)));
+
+b.
+let num = [1,2,3];
+
+let result=num.reduce((value,el)=>(value*el));
+
+
+
+
+
+
