@@ -629,6 +629,348 @@ let num = [1,2,3];
 let result=num.reduce((value,el)=>(value*el));
 
 
+***Spread
+expands an iterable into mltiple values.
+ye dono ke liye kaam krta hai array ,string ye bhut jaldi se iterate karta hai as a loop.
+
+exs--
+let arr = [2,4,5,7,1,2,4,9,8,4,7,6,1,2,0,-1];
+
+console.log(Math.min(...arr));
+
+console.log(..."apna college");
+
+
+**Spread with array literals
+
+exs--
+let arr = [1,2,1,-1];
+
+let newArr = [...arr];
+console.log(newArr);
+
+
+let chars = [..."hello"];
+console.log(chars);
+
+
+let odd = [1,3,5,7,9];
+let even = [2,4,6,8,10];
+
+console.log(...odd , ...even);
+
+
+****Spread with object literals
+
+exs--
+
+
+let data = {
+    email:"kaditya41057@gmail.com",
+    password : 1234
+}
+let newdata = {...data, id: 123,country:"India"};
+console.log(newdata);
+
+
+
+let nums = [1,2,4,7,9,3,1];
+let obj1 = {...nums};
+console.log(obj1);
+
+
+
+let obj2 = {..."Gla University"};
+console.log(obj2);
+
+
+
+**Rest
+rest is opposite of spread
+Allows a function to take and indefinte number of arguments and bundle them in an array 
+
+ex--
+function sum(...args){   // using rest
+    for(let i=0; i<args.length; i++){
+        console.log("you gave us: ",args[i]);
+    }
+}
+sum(1,7,5,0,2,-1,9);
+
+
+
+function sum(...args){
+    return args.reduce((add,el)=>(add+el));
+}
+console.log(sum(1,2,3,4,5));
+
+
+
+
+****Destructuring
+storing values of array into multiple variables
+
+ex--
+let names=["tony","steve","peter","helen","abc","uf","aaa"];
+
+let [winner, runnerup,] = names ;   // it not an array it is individual varible.
+console.log(winner);
+console.log(runnerup);
+
+
+*** Destructuring(Objects)
+
+
+
+
+const student = {
+    name:"karan",
+    age:14,
+    class:9,
+    subjects:["hindi","sanskrit","java","c++"],
+    username:"karan@123",
+    password:"abcd"
+}
+
+
+// let {username,password} = student ;
+
+let {username:user,password:secret} = student ;  // hum key ko match kra ke kiye new varible mai value store kra skte hai.
+
+
+// console.log(username);
+// console.log(password);
+console.log(user);
+console.log(secret);
+
+------------------------------------------------------------------------
+DOM(Document Object Model)
+The DOM represents a document with a logical tree
+
+It allows us to manipulate/change webpage content(HTML elements).
+
+
+****document
+.
+
+🔹 document kya hota hai?
+
+👉 document = poora HTML page (webpage) ka object
+
+👉 Browser tumhari HTML file ko ek object bana deta hai
+👉 Usko hi bolte hain document
+
+🔹 Simple samajh
+
+👉 Tumhari website = HTML page
+👉 JavaScript usko access karta hai → document ke through
+
+🔹 Example
+
+HTML:
+<img id="mainImg" src="image.jpg">
+
+JavaScript:
+document.getElementById("mainImg");
+
+👉 Yaha:
+
+document = poora page
+getElementById = ek method
+"mainImg" = element ka id
+
+👉 Result:
+✔ Ye image element mil jayega
+
+
+
+
+---------
+console.dir() kya hota hai?
+
+👉 console.dir() ek method hai jo object ko detail mein dikhata hai.
+object ka pura structure (properties + methods) dekhna.
+
+
+
+
+***********Selecting elements byId,ByClassName,ByTagNmae
+
+1.getElementById: returns the element as an object or null(if not found).
+
+2.getElementsByClassName: returns the elements as an HTML collection or empty collection(if not found).
+
+3.getElementsByTagName:returns the elements as an HTML collection or empty collection(if not found).
+
+
+************Selecting elements by Query Selectors
+Allows us to use any css Selectors
+
+document.querySelector('p'); // selects first p element
+document.querySelector('#myId'); // selects first element with id = myId
+document.querySelector('.myClass'); // selects first element with class = myClass
+
+document.querySelectorAll("p"); // selects all p elements by adding All in querySelector
+
+
+***********manipulate the html Elements using properties & methods  
+
+innerText
+shows the visible text contained in a node.(screen pe jo dekhta hai whi dekhata hai )
+
+textContent
+shows all the full text.(kuch bhi hidden hai ya humne uski visibilty hta di hai woh bhi dikh deta hai kyoki ye apna content seedha html se uthata hai)
+
+innerHTML
+shows the full markup.(ye pura html markup utha kr dikha deta hai ex tags,p,div, spaces,etc).
+
+
+******manipulating attributes
+
+obj.getAttribute(att)   // attribute ki value pta krna
+obj.setAttribute(att,val)    // attribute ki value bhi change kr skte hai
+they are called getter and setter(getter and setter do functions ka set hota hai jisse value get bhi kar skte hai aur set bhi ).
+
+
+
+
+*******manipulating style
+style property
+
+obj.style
+
+a.
+let heading = document.querySelector('h1');
+heading.style.color='green';
+heading.style.backgroundColor='yellow';
+
+
+b.
+let links = document.querySelectorAll(".box a");
+
+
+for(let i=0; i<links.length; i++){
+    links[i].Style.color="pink";
+}
+OR
+
+for(link of links){
+    links.style.color = "pink";
+}
+
+*****manipulating style
+using classList
+
+obj.classList
+
+classList.add()  // to add new classes
+classList.remove()  // to remove classes
+classList.contains()  // to check if class exists
+classList.toggle()  // to toggle between add & remove(class hogi to hta dega nhi hai to bna dega aur true and false de dega respectively)
+
+
+*****navigation(we track our elements)
+
+1.parentElement
+2.children
+3.previousElementSibling/nextElementSibling
+
+
+
+*********adding elements
+document.createElement('p')
+
+
+1.appendChild(element)
+2.append(element)
+3.prepend(element)
+4.insertAdjacent(where,element)
+
+
+
+*********Removing elements
+
+1.removeChild(element)
+2.remove(element)
+
+******DOM Events
+events are signals that something has occured.(user inputs/actions).
+(events signals hote hai jo btate hai ki page par kya activity hui ha ex- kya koi buttin press hua hai ya kuch aur).
+
+1. onclick(when  an elements is clicked)
+
+ex1---
+
+ let btn = document.querySelector("button");
+ console.dir(btn);
+
+ btn.onclick = function(){
+     prompt("button was clicked");
+}
+
+
+
+ex2--
+let btns = document.querySelectorAll("button");
+
+for(btn of btns){
+    btn.onclick = sayhello;
+
+} 
+
+
+function sayhello(){
+    alert("hello world!");
+}
+
+
+2.onmouseenter(when mouse enters an element).
+
+ex---
+let btns = document.querySelectorAll("button");
+
+for(btn of btns){
+    btn.onclick = sayhello;
+    btn.onmouseenter = function(){
+        console.log("you entered a button");
+    }
+
+} 
+
+ 
+function sayhello(){
+    alert("hello world!");
+}
+
+
+
+*******Event Listener(event Listener ki jaroorat kyo padi bcz onclick ya onmouseenter se hum sirf ek value set kr skte hai,agr hum chate hai ek click pe multiple function ho wo nhi ho paayegi that why we use evenListener)
+
+addEventListener
+
+element.addEventListener(event,callback)
+
+
+ex----
+let btns = document.querySelectorAll("button");
+
+for(btn of btns){
+    // btn.addEventListener("click",sayhello);
+    // btn.addEventListener("click",sayNmae);
+    btn.addEventListener("dblclick",function(){
+        console.log("you clicked double")
+    });
+
+} 
+
+
+function sayhello(){
+    alert("hello world!");
+}
+
+function sayNmae(){
+    alert("Gla university!");
+}
 
 
 
