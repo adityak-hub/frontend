@@ -1,0 +1,15 @@
+div{
+    height:100px;
+    width:200px;
+    background-color: yellow;
+    border: 1px solid black;
+
+}
+
+ul{
+    background-color: aqua;
+}
+
+li{
+    background-color: blue;
+}

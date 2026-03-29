@@ -973,5 +973,292 @@ function sayNmae(){
 }
 
 
+**************'this' in eventListener
+
+ex-- let btn = document.querySelector("button");
+btn.addEventListener("click",function(){
+    console.log(this);
+    //console.dir(this.innerText);
+});
+
+->(jo hmara this hai woh addEventListener ke method ke callback ya function e andar jo this hai woh hmara whi cheej hai jiske liye humne eventListener create kiya hai,basically jo hmara btn hai whi this hai.[matlab this button ko specify kr rha hai or this ki help se hum btn ki property acces kr skte hai]).
 
 
+
+***************default argument evenListener
+
+let btn = document.querySelector("button");
+
+btn.addEventListener("click",function(event){   //event or ev or e 
+    console.log(event);
+    console.log("button clicked");
+})
+
+*****keyboard event
+ex--
+1.
+let inp = document.querySelector("input");
+
+inp.addEventListener("keydown",function(){
+    console.log("key was pressed");
+});
+
+
+2.
+let inp = document.querySelector("input");
+
+inp.addEventListener("keyup",function(event){
+    console.log("key = ",event.key);
+    console.log("code= ",event.code);
+    console.log("key was relased");
+});
+
+
+
+*********Form Events
+ex--
+
+let frm = document.querySelector("form");
+
+frm.addEventListener("submit",function(event){
+    event.preventDefault();   // default cheejo ko rokne ke liye jaise action url pe ja rha tha submit ke baad.
+    alert("form submitted");
+});
+
+
+
+*****extracting form data
+
+
+ex---
+let frm = document.querySelector("form");
+
+frm.addEventListener("submit",function(event){
+    event.preventDefault();
+  let user= document.querySelector("#user");   // OR let user= this.elements[0];  OR frm.elements[0];
+  let pass= document.querySelector("#pass");   // OR let user= this.elements[1];  OR frm.elements[1];
+  console.dir(user.value);
+  console.log(pass.value);
+
+  alert(`hii ${user.value}, your password is ${pass.value}`);
+
+});
+
+**************More Events
+
+
+1.change event
+The change event occurs when the value of an element has been changed(only works on<input>,<textarea>,and <select>elements).
+
+ex--
+let frm = document.querySelector("form");
+
+frm.addEventListener("submit",function(event){
+    event.preventDefault();
+});
+
+let user = document.querySelector("#user");
+
+user.addEventListener("change",function(){
+    console.log("change event");
+    console.log("final value is = ", this.value);
+})
+
+
+
+2.input event(jab hum chate hai ki chote chote changes track ho then we use input event).
+
+The input event fires when the value of an <input>,<select>,or<textarea> element has been changed.
+
+
+let frm = document.querySelector("form");
+
+frm.addEventListener("submit",function(event){
+    event.preventDefault();
+});
+
+let user = document.querySelector("#user");
+
+user.addEventListener("change",function(){
+    console.log("change event");
+    console.log("final value is = ", this.value);
+})
+user.addEventListener("input",function(){
+    console.log("input event"); // chota chnage bhi hoga woh bhi track hoga  but change input mai final value track hoga.
+    console.log("final value is = ", this.value);
+})
+
+
+
+*****example of text editor
+
+let inp = document.querySelector("#text");
+let p = document.querySelector("p");
+
+inp.addEventListener("input",function(){
+    console.log(inp.value);
+    p.innerText=inp.value;
+});
+
+
+
+
+***********event bubbling
+jab hum html mai  different nested element ke liye alag alag event listener create krte hai use event bubblinng khte hai
+
+
+ex---
+let div = document.querySelector("div");
+let ul = document.querySelector("ul");
+let lis = document.querySelectorAll("li");
+
+
+div.addEventListener("click",function(){
+    console.log("div was clicked");
+})
+
+ul.addEventListener("click",function(){
+    console.log("ul was clicked");
+})
+
+
+for(li of lis ){
+    li.addEventListener("click",function(){
+        console.log("li was clicked");
+    });
+}
+
+
+(jab hum nested element ke eventListener ko triger krte hai to uske parent aur uske upper wale elements ke bhi eventListener automatic triger ho jaate hai).
+
+
+****event bubbling ko rokhe kaise(by event.stopPropagation())
+Event Bubbling ka matlab hai:
+👉 Jab kisi child element par event hota hai, to wo upar parent elements tak travel karta hai
+
+
+let div = document.querySelector("div");
+let ul = document.querySelector("ul");
+let lis = document.querySelectorAll("li");
+
+
+div.addEventListener("click",function(){
+    console.log("div was clicked");
+})
+
+ul.addEventListener("click",function(event){
+    event.stopPropagation();
+    console.log("ul was clicked");
+})
+
+
+for(li of lis ){
+    li.addEventListener("click",function(event){
+        event.stopPropagation();
+        console.log("li was clicked");
+    });
+}
+
+(ab jab nested element ke eventLiistener ko triger(click) krenege toh parent or uske upper ke eventListner triger nhi honge).
+
+
+
+
+****************Todo task mai ek problem
+
+
+let btn =document.querySelector("button");
+let ul = document.querySelector("ul");
+let inp = document.querySelector("input");
+
+
+btn.addEventListener("click",function(){
+    let item = document.createElement("li");
+    item.innerText = inp.value;
+    let delbtn = document.createElement("button");
+    delbtn.innerText="delete";
+    delbtn.classList.add("delete");
+    item.appendChild(delbtn);
+    ul.appendChild(item);
+    inp.value="";   //reset to empty String(input mai task add hone ke baad hat jaye)
+
+})
+
+
+let delBtns = document.querySelectorAll(".delete");
+
+for(delBtn of delBtns){
+    delBtn.addEventListener("click",function(){
+        let par =this.parentElement;
+        par.remove();
+
+
+    })
+}
+
+/*ismai ek problem hai ki jo element or todo kaam(sleep , eat) exist krte hai phle se ye sirf unpe kaam krta hai jo event listner se task bnaya hai, kaam nhi karega woh sirf existing element ke liye kaam krta hai
+already exist kaam hai unpe hi delte btn wala eventListner kaam krega aur unpe kaam nhi krta jo hmne eventListner lga ke task add kiye due to   */
+
+
+/*
+⚠️ Problem kya hai?
+
+👉 Delete button ka event sirf jo elements already page par the unpe kaam kar raha hai
+👉 Jo tu baad me JS se add kar raha hai (new tasks), unpe kaam nahi kar raha
+
+🧠 Reason (main point):
+
+Event listener sirf un elements par lagta hai jo us time exist karte hain
+
+Matlab:
+
+let btns = document.querySelectorAll(".delete");
+
+👉 Ye sirf initial buttons ko select karega
+👉 Baad me jo naye buttons add hue → unpe event laga hi nahi
+
+🔥 Isko kya bolte hain?
+
+👉 Ye issue hota hai DOM loading + static selection ki wajah se
+👉 Solution hai: Event Delegation
+*/
+
+
+******🔥 Event Delegation kya hai?
+
+Event Delegation ek technique hai jisme tum
+👉 child elements par event lagane ke bajaye parent par event lagate ho
+aur parent hi sab child events handle karta hai
+
+
+
+
+
+
+**************************//   Todo with DOM loading or static selection  solution
+
+let btn =document.querySelector("button");
+let ul = document.querySelector("ul");
+let inp = document.querySelector("input");
+
+
+btn.addEventListener("click",function(){
+    let item = document.createElement("li");
+    item.innerText = inp.value;
+    let delbtn = document.createElement("button");
+    delbtn.innerText="delete";
+    delbtn.classList.add("delete");
+    item.appendChild(delbtn);
+    ul.appendChild(item);
+    inp.value="";   //reset to empty String(input mai task add hone ke baad hat jaye)
+
+});
+
+ul.addEventListener("click",function(event){
+
+    if(event.target.nodeName=="BUTTON"){
+    let listItem = event.target.parentElement;
+    listItem.remove();
+    console.log("deleted");
+    }
+});
